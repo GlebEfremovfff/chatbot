@@ -10,11 +10,54 @@ class DialogView extends StatefulWidget {
   _DialogViewState createState() => _DialogViewState();
 }
 
-class _DialogViewState extends State<DialogView> {
+class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   List<Message> messageList;
   List<Message> listviewList;
   List<String> buttonList;
   int id = 0;
+  AnimationController _messageWindowController;
+  Animation _messageWindowAnimation;
+  AnimationController _bunnyController;
+  Animation<Offset> _bunnyAnimation;
+  @override
+  void initState() {
+    super.initState();
+    _bunnyController = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _bunnyAnimation = Tween<Offset>(
+      begin: const Offset(2.0, 3.0),
+      end: const Offset(0.0, 0.0),
+    ).animate(
+        CurvedAnimation(parent: _bunnyController, curve: Curves.elasticIn));
+    _messageWindowController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1200),
+    );
+    _messageWindowAnimation =
+        CurvedAnimation(parent: _messageWindowController, curve: Curves.easeIn);
+    _bunnyController.forward();
+    _bunnyController.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        _bunnyController.stop();
+      }
+    });
+
+    _messageWindowController.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        _messageWindowController.stop();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _bunnyController.dispose();
+    _messageWindowController.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -34,55 +77,94 @@ class _DialogViewState extends State<DialogView> {
         height: size.height,
         width: size.width,
         color: Colors.black,
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              width: size.width > 400 ? size.width ~/ 3 : 1,
-              height: size.height,
-            ),
-            Column(
+        child: Padding(
+          padding: EdgeInsets.only(
+            right: 20,
+            top: 50,
+          ),
+          child: Align(
+            alignment: Alignment.bottomRight,
+            child: Column(
               children: [
-                Container(
-                  height: size.height * 2 / 3,
-                  width: size.width / 3,
-                  color: Colors.white,
-                  child: ListView.builder(
-                    reverse: true,
-                    itemCount: listviewList.length,
-                    itemBuilder: (BuildContext context, int pos) {
-                      return MessageCard(listviewList[pos]);
-                    },
+                FadeTransition(
+                  opacity: _messageWindowAnimation,
+                  child: Container(
+                    height: size.height / 2 + 10,
+                    width: size.width / 4 + 10,
+                    decoration: BoxDecoration(
+                      color: Colors.orange,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(10),
+                        topRight: Radius.circular(10),
+                        bottomRight: Radius.circular(10),
+                        bottomLeft: Radius.circular(10),
+                      ),
+                    ),
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 5),
+                      child: Center(
+                        child: Column(
+                          children: [
+                            Container(
+                              height: size.height / 6 * 2,
+                              width: size.width / 4,
+                              color: Colors.white,
+                              child: ListView.builder(
+                                reverse: true,
+                                itemCount: listviewList.length,
+                                itemBuilder: (BuildContext context, int pos) {
+                                  return MessageCard(listviewList[pos]);
+                                },
+                              ),
+                            ),
+                            Container(
+                              color: Colors.black,
+                              height: size.height / 6,
+                              width: size.width / 4,
+                              child: ListView.builder(
+                                itemCount: buttonList.length,
+                                itemBuilder: (BuildContext context, int poss) {
+                                  return GestureDetector(
+                                    onTap: () {
+                                      _sendButtonData(
+                                          context, buttonList[poss]);
+                                    },
+                                    child: MouseRegion(
+                                      cursor: SystemMouseCursors.click,
+                                      child: ButtonsCard(buttonList[poss]),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-                Container(
-                  color: Colors.black,
-                  height: size.height / 3,
-                  width: size.width / 3,
-                  child: ListView.builder(
-                    itemCount: buttonList.length,
-                    itemBuilder: (BuildContext context, int poss) {
-                      return GestureDetector(
-                        onTap: () {
-                          _sendButtonData(context, buttonList[poss]);
-                        },
-                        child: MouseRegion(
-                          cursor: SystemMouseCursors.click,
-                          child: ButtonsCard(buttonList[poss]),
+                GestureDetector(
+                  onTap: () {
+                    _messageWindowController.forward();
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.only(top: 20),
+                    child: MouseRegion(
+                      cursor: SystemMouseCursors.click,
+                      child: SlideTransition(
+                        position: _bunnyAnimation,
+                        child: Container(
+                          height: 50,
+                          width: 50,
+                          color: Colors.orange,
                         ),
-                      );
-                    },
+                      ),
+                    ),
                   ),
                 ),
               ],
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width > 400
-                  ? MediaQuery.of(context).size.width ~/ 3
-                  : 1,
-              height: size.height,
-            ),
-          ],
+          ),
         ),
       ),
     );
@@ -116,7 +198,7 @@ class _DialogViewState extends State<DialogView> {
                   url: message.link,
                   child: Text(
                     message.text,
-                    style: TextStyle(color: Colors.blue[300], fontSize: 20),
+                    style: TextStyle(color: Colors.blue[300], fontSize: 12),
                   ),
                 )
               : Text(
@@ -125,7 +207,7 @@ class _DialogViewState extends State<DialogView> {
                       color: message.text == "Например такие..."
                           ? Colors.blue[300]
                           : Colors.black,
-                      fontSize: 20),
+                      fontSize: 12),
                 ),
         ),
       ),
@@ -138,7 +220,7 @@ class _DialogViewState extends State<DialogView> {
       child: Container(
         alignment: Alignment.centerLeft,
         child: Container(
-          height: 40,
+          height: 25,
           padding: EdgeInsets.only(right: 10, top: 5, bottom: 5, left: 10),
           decoration: BoxDecoration(
             color: Colors.white38,
@@ -154,7 +236,7 @@ class _DialogViewState extends State<DialogView> {
               data,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black, fontSize: 20),
+              style: TextStyle(color: Colors.black, fontSize: 12),
             ),
           ),
         ),
