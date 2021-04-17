@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:link/link.dart';
 import 'excurse.dart';
+
 class DialogView extends StatefulWidget {
   DialogView({Key key}) : super(key: key);
 
@@ -132,7 +133,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     _oldController_1.addStatusListener((AnimationStatus status) async {
       if (status == AnimationStatus.completed) {
         _oldController_1.stop();
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(Duration(milliseconds: 500));
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -156,7 +157,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     _youngController_1.addStatusListener((AnimationStatus status) async {
       if (status == AnimationStatus.completed) {
         _youngController_1.stop();
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(Duration(milliseconds: 500));
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -180,7 +181,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     _bunnyController_1.addStatusListener((AnimationStatus status) async {
       if (status == AnimationStatus.completed) {
         _bunnyController_1.stop();
-        await Future.delayed(Duration(seconds: 1));
+        await Future.delayed(Duration(milliseconds: 500));
         showDialog(
             context: context,
             builder: (BuildContext context) {
@@ -317,13 +318,14 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
       buttonList.add("Рекомендации");
       buttonList.add("Сменить персонажа");
     }
-    _upgrageListView(); 
+    _upgrageListView();
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           color: Colors.black,
-          image: DecorationImage(image: AssetImage('images/background.jpg'),fit:BoxFit.fill),
-          ),
+          image: DecorationImage(
+              image: AssetImage('images/background.jpg'), fit: BoxFit.fill),
+        ),
         height: size.height,
         width: size.width,
         child: Padding(
@@ -353,7 +355,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   color: Colors.grey.withOpacity(0.5),
                                   spreadRadius: 5,
                                   blurRadius: 7,
-                                  offset: Offset(0, 3), 
+                                  offset: Offset(0, 3),
                                 ),
                               ],
                               borderRadius: BorderRadius.only(
@@ -736,10 +738,9 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          
-          var list = [
-            "В начало"
-          ];
+          Navigator.push(context,
+              MaterialPageRoute(builder: (BuildContext context) => Excurse()));
+          var list = ["В начало"];
           return list;
         }
       case "О проекте":
