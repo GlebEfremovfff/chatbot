@@ -91,7 +91,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           child: Align(
             alignment: Alignment.bottomRight,
             child: Padding(
-              padding: const EdgeInsets.only(bottom:80 , right: 20.0),
+              padding: const EdgeInsets.only(bottom: 80, right: 20.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -117,14 +117,11 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
+                              ChatHeader(size, "Альфред",
+                                  "Как говорил мой дед..."), //шапка
                               Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(12),
-                                      topRight: Radius.circular(12)),
-                                ),
-                                height: size.height / 2,
+                                //диалоговое окно
+                                height: size.height / 2 - 50,
                                 width: size.width / 4,
                                 child: ListView.builder(
                                   reverse: true,
@@ -135,6 +132,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                 ),
                               ),
                               Container(
+                                //кнопочки ответов
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.only(
@@ -200,6 +198,78 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     );
   }
 
+  Widget ChatHeader(Size size, String name, String motto) {
+    //шапка
+    return Container(
+      height: 50,
+      width: size.width / 4,
+      decoration: BoxDecoration(
+        color: Colors.blue[800],
+        borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(12), topRight: Radius.circular(12)),
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Padding(
+            padding: EdgeInsets.only(left: 5),
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: Container(
+                height: 40,
+                width: 40,
+                color: Colors.orange,
+              ),
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(right: 20, top: 10),
+            child: Container(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w900,
+                    ),
+                  ),
+                  Text(
+                    motto,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 10,
+                      fontWeight: FontWeight.w300,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: () {
+              _messageWindowController.reverse();
+            },
+            child: MouseRegion(
+              cursor: SystemMouseCursors.click,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.blue[900],
+                  borderRadius:
+                      BorderRadius.only(topRight: Radius.circular(12)),
+                ),
+                child: Icon(Icons.close, color: Colors.white),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget MessageCard(Message message) {
     return Padding(
       padding: message.from_bot == 0
@@ -253,7 +323,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           height: 25,
           padding: EdgeInsets.only(right: 10, top: 5, bottom: 5, left: 10),
           decoration: BoxDecoration(
-            color: Colors.blue,
+            color: Colors.blue[800],
             borderRadius: BorderRadius.only(
               topLeft: Radius.circular(12),
               topRight: Radius.circular(12),
@@ -266,7 +336,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
               data,
               overflow: TextOverflow.ellipsis,
               textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.black, fontSize: 12),
+              style: TextStyle(color: Colors.white, fontSize: 12),
             ),
           ),
         ),
