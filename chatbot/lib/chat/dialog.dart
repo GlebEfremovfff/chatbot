@@ -136,7 +136,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("Альфред"),
+                content: Text("Приятно познакомиться, моё имя Альфред, \n и я являюсь вашим спутником по данному сайту. \nЧем я могу быть полезен?"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -159,7 +159,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("Aндре"),
+                content: Text("Доброго времени суток, я Андре, твой Личный помощник. \n Давайте вместе разберёмся с возможностями данного сайта"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -182,7 +182,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("Алексий"),
+                content: Text("Алексий Привет, меня зовут Алексий, \n я твой цифровой помощник и по совместительству друг. \n Давай прыгать по сайту вместе!"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -454,8 +454,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   ),
                                   fit: BoxFit.fill),
                             ),
-                            height: 110, //220
-                            width: 75, //150
+                            height: 150, //220 (для Миши 110 и 75)
+                            width: 110, //150
                           ),
                         ),
                       ),
@@ -474,8 +474,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   ),
                                   fit: BoxFit.fill),
                             ),
-                            height: 110,
-                            width: 75,
+                            height: 150,
+                            width: 110,
                           ),
                         ),
                       ),
@@ -494,8 +494,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   ),
                                   fit: BoxFit.fill),
                             ),
-                            height: 110,
-                            width: 75,
+                            height: 150,
+                            width: 110,
                           ),
                         ),
                       ),
