@@ -74,95 +74,125 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     _upgrageListView();
     return Scaffold(
       body: Container(
+        decoration: BoxDecoration(
+          color: Colors.black,
+          image: DecorationImage(
+            image: AssetImage("images/background.jpg"),
+            fit: BoxFit.fill,
+          ),
+        ),
         height: size.height,
         width: size.width,
-        color: Colors.black,
         child: Padding(
           padding: EdgeInsets.only(
             right: 20,
-            top: 50,
+            top: 104,
           ),
           child: Align(
             alignment: Alignment.bottomRight,
-            child: Column(
-              children: [
-                FadeTransition(
-                  opacity: _messageWindowAnimation,
-                  child: Container(
-                    height: size.height / 2 + 10,
-                    width: size.width / 4 + 10,
-                    decoration: BoxDecoration(
-                      color: Colors.orange,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(10),
-                        topRight: Radius.circular(10),
-                        bottomRight: Radius.circular(10),
-                        bottomLeft: Radius.circular(10),
+            child: Padding(
+              padding: const EdgeInsets.only(bottom:80 , right: 20.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  FadeTransition(
+                    //чат
+                    opacity: _messageWindowAnimation,
+                    child: Container(
+                      height: size.height / 1.5,
+                      width: size.width / 4,
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(10),
+                          topRight: Radius.circular(10),
+                          bottomRight: Radius.circular(10),
+                          bottomLeft: Radius.circular(10),
+                        ),
+                      ),
+                      child: Padding(
+                        padding: EdgeInsets.all(0),
+                        child: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(12),
+                                      topRight: Radius.circular(12)),
+                                ),
+                                height: size.height / 2,
+                                width: size.width / 4,
+                                child: ListView.builder(
+                                  reverse: true,
+                                  itemCount: listviewList.length,
+                                  itemBuilder: (BuildContext context, int pos) {
+                                    return MessageCard(listviewList[pos]);
+                                  },
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(12),
+                                        bottomLeft: Radius.circular(12))),
+                                height: size.height / 6,
+                                width: size.width / 4,
+                                child: ListView.builder(
+                                  itemCount: buttonList.length,
+                                  itemBuilder:
+                                      (BuildContext context, int poss) {
+                                    return GestureDetector(
+                                      onTap: () {
+                                        _sendButtonData(
+                                            context, buttonList[poss]);
+                                      },
+                                      child: MouseRegion(
+                                        cursor: SystemMouseCursors.click,
+                                        child: ButtonsCard(buttonList[poss]),
+                                      ),
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ),
+                  ),
+                  GestureDetector(
+                    // контейнер персонажа
+                    onTap: () {
+                      _messageWindowController.forward();
+                    },
                     child: Padding(
-                      padding: EdgeInsets.only(top: 5),
-                      child: Center(
-                        child: Column(
-                          children: [
-                            Container(
-                              height: size.height / 6 * 2,
-                              width: size.width / 4,
-                              color: Colors.white,
-                              child: ListView.builder(
-                                reverse: true,
-                                itemCount: listviewList.length,
-                                itemBuilder: (BuildContext context, int pos) {
-                                  return MessageCard(listviewList[pos]);
-                                },
-                              ),
+                      padding: EdgeInsets.only(top: 60, left: 45),
+                      child: MouseRegion(
+                        cursor: SystemMouseCursors.click,
+                        child: SlideTransition(
+                          position: _bunnyAnimation,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    "images/Alfred_post.png",
+                                  ),
+                                  fit: BoxFit.fill),
                             ),
-                            Container(
-                              color: Colors.black,
-                              height: size.height / 6,
-                              width: size.width / 4,
-                              child: ListView.builder(
-                                itemCount: buttonList.length,
-                                itemBuilder: (BuildContext context, int poss) {
-                                  return GestureDetector(
-                                    onTap: () {
-                                      _sendButtonData(
-                                          context, buttonList[poss]);
-                                    },
-                                    child: MouseRegion(
-                                      cursor: SystemMouseCursors.click,
-                                      child: ButtonsCard(buttonList[poss]),
-                                    ),
-                                  );
-                                },
-                              ),
-                            ),
-                          ],
+                            height: 220,
+                            width: 150,
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    _messageWindowController.forward();
-                  },
-                  child: Padding(
-                    padding: EdgeInsets.only(top: 20),
-                    child: MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      child: SlideTransition(
-                        position: _bunnyAnimation,
-                        child: Container(
-                          height: 50,
-                          width: 50,
-                          color: Colors.orange,
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
@@ -185,13 +215,13 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             color: message.from_bot == 0 ? Colors.grey[300] : Colors.grey[350],
             borderRadius: message.from_bot == 0
                 ? BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomLeft: Radius.circular(10))
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                    bottomLeft: Radius.circular(12))
                 : BorderRadius.only(
-                    topLeft: Radius.circular(10),
-                    topRight: Radius.circular(10),
-                    bottomRight: Radius.circular(10)),
+                    topLeft: Radius.circular(12),
+                    topRight: Radius.circular(12),
+                    bottomRight: Radius.circular(12)),
           ),
           child: message.link.isNotEmpty
               ? Link(
@@ -223,12 +253,12 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           height: 25,
           padding: EdgeInsets.only(right: 10, top: 5, bottom: 5, left: 10),
           decoration: BoxDecoration(
-            color: Colors.white38,
+            color: Colors.blue,
             borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(1),
-              topRight: Radius.circular(1),
-              bottomRight: Radius.circular(1),
-              bottomLeft: Radius.circular(1),
+              topLeft: Radius.circular(12),
+              topRight: Radius.circular(12),
+              bottomRight: Radius.circular(12),
+              bottomLeft: Radius.circular(12),
             ),
           ),
           child: Center(
@@ -292,7 +322,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
               Message(
                   this.id,
                   1,
-                  "Привет! Я бот Алёша! Помогатель-выручатель на сайте 'Россия - страна возможностей'. Итак...",
+                  "Привет! Я бот Альфред! Помогатель-выручатель на сайте 'Россия - страна возможностей'. Итак...",
                   ""));
           await Future.delayed(Duration(seconds: 2));
           _sendMessage(
