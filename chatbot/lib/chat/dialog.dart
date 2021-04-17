@@ -16,6 +16,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   List<String> buttonList;
   int id = 0;
   int bot_id = 0;
+  bool isChatOpening = true;
   String mainPerson;
   String mainStatus;
   String mainAvatar;
@@ -282,12 +283,21 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     setState(() {
-      oldPersonTapped ? mainPerson="Альфред" 
-      : youngPersonTapped ? mainPerson="Андре" : mainPerson="Алексий" ;
-      oldPersonTapped ? mainStatus="Говорю только по делу" 
-      : youngPersonTapped ? mainStatus="Время деньги..." : mainStatus= "Готов на все ради морковки!";
-      oldPersonTapped ? mainAvatar= "3Mask_Group.png" 
-      : youngPersonTapped ? mainAvatar = "3Mask_Group.png" : mainAvatar = "1Mask_Group.png";
+      oldPersonTapped
+          ? mainPerson = "Альфред"
+          : youngPersonTapped
+              ? mainPerson = "Андре"
+              : mainPerson = "Алексий";
+      oldPersonTapped
+          ? mainStatus = "Говорю только по делу"
+          : youngPersonTapped
+              ? mainStatus = "Время деньги..."
+              : mainStatus = "Готов на все ради морковки!";
+      oldPersonTapped
+          ? mainAvatar = "3Mask_Group.png"
+          : youngPersonTapped
+              ? mainAvatar = "3Mask_Group.png"
+              : mainAvatar = "1Mask_Group.png";
     });
     Size size = MediaQuery.of(context).size;
     if (messageList == null) {
@@ -325,73 +335,106 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  FadeTransition(
-                    //чат
-                    opacity: _messageWindowAnimation,
-                    child: Container(
-                      height: size.height / 1.5,
-                      width: size.width / 4,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(10),
-                          topRight: Radius.circular(10),
-                          bottomRight: Radius.circular(10),
-                          bottomLeft: Radius.circular(10),
-                        ),
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(0),
-                        child: Center(
-                          child: Column(
-                            
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              ChatHeader(size,mainPerson ,mainStatus,mainAvatar), //шапка
-                              Container(
-                                //диалоговое окно
-                                height: size.height / 2 - 50,
-                                width: size.width / 4,
-                                child: ListView.builder(
-                                  reverse: true,
-                                  itemCount: listviewList.length,
-                                  itemBuilder: (BuildContext context, int pos) {
-                                    return MessageCard(listviewList[pos]);
-                                  },
-                                ),
+                  isChatOpening
+                      ? FadeTransition(
+                          //чат
+                          opacity: _messageWindowAnimation,
+                          child: Container(
+                            height: size.height / 1.5,
+                            width: size.width / 4,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10),
+                                bottomRight: Radius.circular(10),
+                                bottomLeft: Radius.circular(10),
                               ),
-                              Container(
-                                //кнопочки ответов
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.only(
-                                        bottomRight: Radius.circular(12),
-                                        bottomLeft: Radius.circular(12))),
-                                height: size.height / 6,
-                                width: size.width / 4,
-                                child: ListView.builder(
-                                  itemCount: buttonList.length,
-                                  itemBuilder:
-                                      (BuildContext context, int poss) {
-                                    return GestureDetector(
-                                      onTap: () {
-                                        _sendButtonData(
-                                            context, buttonList[poss]);
-                                      },
-                                      child: MouseRegion(
-                                        cursor: SystemMouseCursors.click,
-                                        child: ButtonsCard(buttonList[poss]),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(0),
+                              child: Center(
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    ChatHeader(size, mainPerson, mainStatus,
+                                        mainAvatar), //шапка
+                                    Container(
+                                      //диалоговое окно
+                                      height: size.height / 2 - 50,
+                                      width: size.width / 4,
+                                      child: ListView.builder(
+                                        reverse: true,
+                                        itemCount: listviewList.length,
+                                        itemBuilder:
+                                            (BuildContext context, int pos) {
+                                          return MessageCard(listviewList[pos]);
+                                        },
                                       ),
-                                    );
-                                  },
+                                    ),
+                                    Container(
+                                      //кнопочки ответов
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.only(
+                                          bottomRight: Radius.circular(12),
+                                          bottomLeft: Radius.circular(12),
+                                        ),
+                                      ),
+                                      height: size.height / 6,
+                                      width: size.width / 4,
+                                      child: ListView.builder(
+                                        itemCount: buttonList.length,
+                                        itemBuilder:
+                                            (BuildContext context, int poss) {
+                                          return GestureDetector(
+                                            onTap: () {
+                                              _sendButtonData(
+                                                  context, buttonList[poss]);
+                                            },
+                                            child: MouseRegion(
+                                              cursor: SystemMouseCursors.click,
+                                              child:
+                                                  ButtonsCard(buttonList[poss]),
+                                            ),
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            ],
+                            ),
+                          ),
+                        )
+                      : GestureDetector(
+                          onTap: () {
+                            setState(() {
+                              isChatOpening = true;
+                            });
+                            _messageWindowController.forward();
+                          },
+                          child: Container(
+                            height: 50,
+                            width: 50,
+                            decoration: BoxDecoration(
+                              color: Colors.blue[800],
+                              borderRadius: BorderRadius.only(
+                                bottomRight: Radius.circular(30),
+                                bottomLeft: Radius.circular(30),
+                                topRight: Radius.circular(30),
+                                topLeft: Radius.circular(30),
+                              ),
+                            ),
+                            child: Center(
+                              child: Icon(
+                                Icons.chat,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                    ),
-                  ),
                   Column(
                     children: [
                       //БОТЫ
@@ -467,7 +510,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     );
   }
 
-  Widget ChatHeader(Size size, String name, String motto,String path) {
+  Widget ChatHeader(Size size, String name, String motto, String path) {
     //шапка
     return Container(
       height: 50,
@@ -488,12 +531,14 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
               child: Container(
                 height: 40,
                 width: 40,
-                decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/${path}"))),
+                decoration: BoxDecoration(
+                    image:
+                        DecorationImage(image: AssetImage("images/${path}"))),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 100, top: 10),
+            padding: EdgeInsets.only(right: 40, top: 10),
             child: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -519,8 +564,12 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             ),
           ),
           GestureDetector(
-            onTap: () {
+            onTap: () async {
               _messageWindowController.reverse();
+              await Future.delayed(Duration(milliseconds: 1300));
+              setState(() {
+                isChatOpening = false;
+              });
             },
             child: MouseRegion(
               cursor: SystemMouseCursors.click,
