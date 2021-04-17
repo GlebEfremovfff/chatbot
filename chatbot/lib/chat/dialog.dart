@@ -16,6 +16,9 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   List<String> buttonList;
   int id = 0;
   int bot_id = 0;
+  String mainPerson;
+  String mainStatus;
+  String mainAvatar;
   bool oldPersonTapped = false;
   bool youngPersonTapped = false;
   bool bunnyPersonTapped = false;
@@ -132,7 +135,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("ABOBA_2"),
+                content: Text("Альфред"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -155,7 +158,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("ABOBA"),
+                content: Text("Aндре"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -178,7 +181,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("ABOBA_3"),
+                content: Text("Алексий"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -200,7 +203,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                     Navigator.of(context).pop();
                                     _youngController_2.forward();
                                   },
-                                  child: Text("Бенджемин"),
+                                  child: Text("Андре"),
                                 ),
                                 TextButton(
                                   onPressed: () {
@@ -278,6 +281,14 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
+    setState(() {
+      oldPersonTapped ? mainPerson="Альфред" 
+      : youngPersonTapped ? mainPerson="Андре" : mainPerson="Алексий" ;
+      oldPersonTapped ? mainStatus="Говорю только по делу" 
+      : youngPersonTapped ? mainStatus="Время деньги..." : mainStatus= "Готов на все ради морковки!";
+      oldPersonTapped ? mainAvatar= "3Mask_Group.png" 
+      : youngPersonTapped ? mainAvatar = "3Mask_Group.png" : mainAvatar = "1Mask_Group.png";
+    });
     Size size = MediaQuery.of(context).size;
     if (messageList == null) {
       messageList = [];
@@ -333,10 +344,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                         padding: EdgeInsets.all(0),
                         child: Center(
                           child: Column(
+                            
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              ChatHeader(size, "Альфред",
-                                  "Как говорил мой дед..."), //шапка
+                              ChatHeader(size,mainPerson ,mainStatus,mainAvatar), //шапка
                               Container(
                                 //диалоговое окно
                                 height: size.height / 2 - 50,
@@ -396,7 +407,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
-                                    "images/Alfred_post.png",
+                                    "images/Andre_klassik.png",
                                   ),
                                   fit: BoxFit.fill),
                             ),
@@ -436,7 +447,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                             decoration: BoxDecoration(
                               image: DecorationImage(
                                   image: AssetImage(
-                                    "images/Alfred_post.png",
+                                    "images/1Neytralitet.png",
                                   ),
                                   fit: BoxFit.fill),
                             ),
@@ -456,7 +467,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     );
   }
 
-  Widget ChatHeader(Size size, String name, String motto) {
+  Widget ChatHeader(Size size, String name, String motto,String path) {
     //шапка
     return Container(
       height: 50,
@@ -471,18 +482,18 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Padding(
-            padding: EdgeInsets.only(left: 5),
+            padding: EdgeInsets.only(left: 10),
             child: Align(
               alignment: Alignment.centerLeft,
               child: Container(
                 height: 40,
                 width: 40,
-                color: Colors.orange,
+                decoration: BoxDecoration(image: DecorationImage(image: AssetImage("images/${path}"))),
               ),
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(right: 20, top: 10),
+            padding: EdgeInsets.only(right: 100, top: 10),
             child: Container(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
