@@ -15,32 +15,250 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   List<Message> listviewList;
   List<String> buttonList;
   int id = 0;
+  int bot_id = 0;
+  bool oldPersonTapped = false;
+  bool youngPersonTapped = false;
+  bool bunnyPersonTapped = false;
   AnimationController _messageWindowController;
   Animation _messageWindowAnimation;
-  AnimationController _bunnyController;
-  Animation<Offset> _bunnyAnimation;
+  AnimationController _bunnyController_1;
+  Animation<Offset> _bunnyAnimation_1;
+  AnimationController _oldController_1;
+  Animation<Offset> _oldAnimation_1;
+  AnimationController _youngController_1;
+  Animation<Offset> _youngAnimation_1;
+  AnimationController _bunnyController_2;
+  Animation<Offset> _bunnyAnimation_2;
+  AnimationController _oldController_2;
+  Animation<Offset> _oldAnimation_2;
+  AnimationController _youngController_2;
+  Animation<Offset> _youngAnimation_2;
   @override
   void initState() {
     super.initState();
-    _bunnyController = AnimationController(
+    _bunnyController_1 = AnimationController(
       vsync: this,
       duration: const Duration(seconds: 2),
     );
-    _bunnyAnimation = Tween<Offset>(
-      begin: const Offset(2.0, 3.0),
-      end: const Offset(0.0, 0.0),
+    _bunnyController_2 = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _youngController_1 = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _youngController_2 = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _oldController_1 = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+    _oldController_2 = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    );
+
+    _oldAnimation_1 = Tween<Offset>(
+      begin: const Offset(3.0, -0.5),
+      end: const Offset(-6.0, 0.0),
     ).animate(
-        CurvedAnimation(parent: _bunnyController, curve: Curves.elasticIn));
+        CurvedAnimation(parent: _oldController_1, curve: Curves.elasticIn));
+    _messageWindowController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1200),
+    );
+
+    _youngAnimation_1 = Tween<Offset>(
+      begin: const Offset(3.0, -0.5),
+      end: const Offset(-7.0, 1.0),
+    ).animate(
+        CurvedAnimation(parent: _youngController_1, curve: Curves.elasticIn));
+    _messageWindowController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1200),
+    );
+
+    _bunnyAnimation_1 = Tween<Offset>(
+      begin: const Offset(3.0, -0.5),
+      end: const Offset(-5.0, -1.0),
+    ).animate(
+        CurvedAnimation(parent: _bunnyController_1, curve: Curves.elasticIn));
+    _messageWindowController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1200),
+    );
+
+    _oldAnimation_2 = Tween<Offset>(
+      begin: const Offset(-6.0, 0.0),
+      end: const Offset(0.0, 2.0),
+    ).animate(
+        CurvedAnimation(parent: _oldController_2, curve: Curves.elasticIn));
+    _messageWindowController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1200),
+    );
+
+    _youngAnimation_2 = Tween<Offset>(
+      begin: const Offset(-7.0, 1.0),
+      end: const Offset(0.0, 3.0),
+    ).animate(
+        CurvedAnimation(parent: _youngController_2, curve: Curves.elasticIn));
+    _messageWindowController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 1200),
+    );
+
+    _bunnyAnimation_2 = Tween<Offset>(
+      begin: const Offset(-5.0, -1.0),
+      end: const Offset(0.0, 1.0),
+    ).animate(
+        CurvedAnimation(parent: _bunnyController_2, curve: Curves.elasticIn));
     _messageWindowController = AnimationController(
       vsync: this,
       duration: Duration(milliseconds: 1200),
     );
     _messageWindowAnimation =
         CurvedAnimation(parent: _messageWindowController, curve: Curves.easeIn);
-    _bunnyController.forward();
-    _bunnyController.addStatusListener((AnimationStatus status) {
+
+    _youngController_1.forward();
+    _oldController_1.addStatusListener((AnimationStatus status) async {
       if (status == AnimationStatus.completed) {
-        _bunnyController.stop();
+        _oldController_1.stop();
+        await Future.delayed(Duration(seconds: 1));
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Text("ABOBA_2"),
+                actions: [
+                  TextButton(
+                    child: Text("Далее"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _bunnyController_1.forward();
+                    },
+                  ),
+                ],
+              );
+            });
+      }
+    });
+
+    _youngController_1.addStatusListener((AnimationStatus status) async {
+      if (status == AnimationStatus.completed) {
+        _youngController_1.stop();
+        await Future.delayed(Duration(seconds: 1));
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Text("ABOBA"),
+                actions: [
+                  TextButton(
+                    child: Text("Далее"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      _oldController_1.forward();
+                    },
+                  ),
+                ],
+              );
+            });
+      }
+    });
+
+    _bunnyController_1.addStatusListener((AnimationStatus status) async {
+      if (status == AnimationStatus.completed) {
+        _bunnyController_1.stop();
+        await Future.delayed(Duration(seconds: 1));
+        showDialog(
+            context: context,
+            builder: (BuildContext context) {
+              return AlertDialog(
+                content: Text("ABOBA_3"),
+                actions: [
+                  TextButton(
+                    child: Text("Далее"),
+                    onPressed: () {
+                      Navigator.of(context).pop();
+
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              content: Text("Выберите бота"),
+                              actions: [
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      bot_id = 1;
+                                      youngPersonTapped = true;
+                                    });
+                                    Navigator.of(context).pop();
+                                    _youngController_2.forward();
+                                  },
+                                  child: Text("Бенджемин"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      bot_id = 2;
+                                      oldPersonTapped = true;
+                                    });
+                                    Navigator.of(context).pop();
+                                    _oldController_2.forward();
+                                  },
+                                  child: Text("Альфред"),
+                                ),
+                                TextButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      bot_id = 3;
+                                      bunnyPersonTapped = true;
+                                    });
+                                    Navigator.of(context).pop();
+                                    _bunnyController_2.forward();
+                                  },
+                                  child: Text("Алексий"),
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                  ),
+                ],
+              );
+            });
+      }
+    });
+
+    _oldController_2.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        _oldController_2.stop();
+        _youngController_1.reverse();
+        _bunnyController_1.reverse();
+        _messageWindowController.forward();
+      }
+    });
+
+    _youngController_2.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        _youngController_2.stop();
+        _bunnyController_1.reverse();
+        _oldController_1.reverse();
+        _messageWindowController.forward();
+      }
+    });
+
+    _bunnyController_2.addStatusListener((AnimationStatus status) {
+      if (status == AnimationStatus.completed) {
+        _bunnyController_2.stop();
+        _youngController_1.reverse();
+        _oldController_1.reverse();
+        _messageWindowController.forward();
       }
     });
 
@@ -54,7 +272,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   @override
   void dispose() {
     super.dispose();
-    _bunnyController.dispose();
+    _bunnyController_1.dispose();
     _messageWindowController.dispose();
   }
 
@@ -163,17 +381,17 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                       ),
                     ),
                   ),
-                  GestureDetector(
-                    // контейнер персонажа
-                    onTap: () {
-                      _messageWindowController.forward();
-                    },
-                    child: Padding(
-                      padding: EdgeInsets.only(top: 60, left: 45),
-                      child: MouseRegion(
-                        cursor: SystemMouseCursors.click,
+                  Column(
+                    children: [
+                      //БОТЫ
+                      Padding(
+                        //молодой
+                        padding: EdgeInsets.only(
+                            top: 1, left: 1), //top: 60, left: 45
                         child: SlideTransition(
-                          position: _bunnyAnimation,
+                          position: youngPersonTapped
+                              ? _youngAnimation_2
+                              : _youngAnimation_1,
                           child: Container(
                             decoration: BoxDecoration(
                               image: DecorationImage(
@@ -182,12 +400,52 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   ),
                                   fit: BoxFit.fill),
                             ),
-                            height: 220,
-                            width: 150,
+                            height: 110, //220
+                            width: 75, //150
                           ),
                         ),
                       ),
-                    ),
+                      Padding(
+                        //старый
+                        padding: EdgeInsets.only(top: 1, left: 1),
+                        child: SlideTransition(
+                          position: oldPersonTapped
+                              ? _oldAnimation_2
+                              : _oldAnimation_1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    "images/Alfred_post.png",
+                                  ),
+                                  fit: BoxFit.fill),
+                            ),
+                            height: 110,
+                            width: 75,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        //животное
+                        padding: EdgeInsets.only(top: 1, left: 1),
+                        child: SlideTransition(
+                          position: bunnyPersonTapped
+                              ? _bunnyAnimation_2
+                              : _bunnyAnimation_1,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                  image: AssetImage(
+                                    "images/Alfred_post.png",
+                                  ),
+                                  fit: BoxFit.fill),
+                            ),
+                            height: 110,
+                            width: 75,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
