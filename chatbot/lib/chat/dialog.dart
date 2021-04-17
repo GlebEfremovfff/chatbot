@@ -1,8 +1,9 @@
+import 'package:chatbot/chat/excurse.dart';
 import 'package:chatbot/chat/message.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:link/link.dart';
-
+import 'excurse.dart';
 class DialogView extends StatefulWidget {
   DialogView({Key key}) : super(key: key);
 
@@ -136,7 +137,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("Приятно познакомиться, моё имя Альфред, \n и я являюсь вашим спутником по данному сайту. \nЧем я могу быть полезен?"),
+                content: Text(
+                    "Приятно познакомиться, моё имя Альфред,\nи я являюсь вашим спутником по данному сайту.\nЧем я могу быть полезен?"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -159,7 +161,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("Доброго времени суток, я Андре, твой Личный помощник. \n Давайте вместе разберёмся с возможностями данного сайта"),
+                content: Text(
+                    "Доброго времени суток, я Андре, твой Личный помощник.\nДавайте вместе разберёмся с возможностями данного сайта"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -182,7 +185,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
-                content: Text("Алексий Привет, меня зовут Алексий, \n я твой цифровой помощник и по совместительству друг. \n Давай прыгать по сайту вместе!"),
+                content: Text(
+                    "Алексий Привет, меня зовут Алексий,\nя твой цифровой помощник и по совместительству друг.\nДавай прыгать по сайту вместе!"),
                 actions: [
                   TextButton(
                     child: Text("Далее"),
@@ -296,7 +300,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
       oldPersonTapped
           ? mainAvatar = "3Mask_Group.png"
           : youngPersonTapped
-              ? mainAvatar = "3Mask_Group.png"
+              ? mainAvatar = "2Mask_Group.png"
               : mainAvatar = "1Mask_Group.png";
     });
     Size size = MediaQuery.of(context).size;
@@ -308,18 +312,18 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
     }
     if (buttonList == null) {
       buttonList = [];
-      buttonList.add("Вызвать помощника");
+      buttonList.add("Навигация");
+      buttonList.add("Экскурсия");
+      buttonList.add("Рекомендации");
+      buttonList.add("Сменить персонажа");
     }
-    _upgrageListView();
+    _upgrageListView(); 
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
           color: Colors.black,
-          image: DecorationImage(
-            image: AssetImage("images/background.jpg"),
-            fit: BoxFit.fill,
+          image: DecorationImage(image: AssetImage('images/background.jpg'),fit:BoxFit.fill),
           ),
-        ),
         height: size.height,
         width: size.width,
         child: Padding(
@@ -344,6 +348,14 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                             width: size.width / 4,
                             decoration: BoxDecoration(
                               color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: Colors.grey.withOpacity(0.5),
+                                  spreadRadius: 5,
+                                  blurRadius: 7,
+                                  offset: Offset(0, 3), 
+                                ),
+                              ],
                               borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10),
@@ -455,7 +467,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   fit: BoxFit.fill),
                             ),
                             height: 150, //220 (для Миши 110 и 75)
-                            width: 110, //150
+                            width: 100, //150
                           ),
                         ),
                       ),
@@ -475,7 +487,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   fit: BoxFit.fill),
                             ),
                             height: 150,
-                            width: 110,
+                            width: 100,
                           ),
                         ),
                       ),
@@ -495,7 +507,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                                   fit: BoxFit.fill),
                             ),
                             height: 150,
-                            width: 110,
+                            width: 100,
                           ),
                         ),
                       ),
@@ -693,15 +705,14 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           _sendMessage(
               context, Message(this.id, 1, "Чем могу Вам помочь?", ""));
           var list = [
-            "Главная страница",
-            "О проекте",
-            "Обучение",
-            "Вход/Регистрация",
-            "Доп. информация"
+            "Навигация",
+            "Экскурсия",
+            "Рекомендации",
+            "Смена персонажа",
           ];
           return list;
         }
-      case "Вызвать помощника":
+      case "Навигация":
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
@@ -710,26 +721,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
               Message(
                   this.id,
                   1,
-                  "Привет! Я бот Альфред! Помогатель-выручатель на сайте 'Россия - страна возможностей'. Итак...",
+                  "Привет! Я меня зовут Алексий! Я твой цифровой помощник.\nЧто тебя интересует?'. Итак...",
                   ""));
-          await Future.delayed(Duration(seconds: 2));
-          _sendMessage(
-              context, Message(this.id, 1, "Небольшая инструкция:", ""));
-          await Future.delayed(Duration(seconds: 1));
-          _sendMessage(
-              context,
-              Message(
-                  this.id,
-                  1,
-                  "С помощью кнопок снизу Вы будете выбирать разделы, которые Вам нужны (они листабельны, нужно лишь провести пальцем или навести на них мышью и промотать), а я буду присылать в ответ подразделы или же ссылки на нужные страницы, которые будут голубого цвета. На них нужно лишь нажать!",
-                  ""));
-          await Future.delayed(Duration(seconds: 5));
-          _sendMessage(context, Message(this.id, 1, "Например такие...", ""));
-          await Future.delayed(Duration(seconds: 1));
-          _sendMessage(context, Message(this.id, 1, "Начнём!", ""));
-          await Future.delayed(Duration(seconds: 1));
-          _sendMessage(
-              context, Message(this.id, 1, "Чем могу Вам помочь?", ""));
           var list = [
             "Главная страница",
             "О проекте",
@@ -739,19 +732,13 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           ];
           return list;
         }
-      case "Главная страница":
+      case "Экскурсия":
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          _sendMessage(
-              context,
-              Message(this.id, 1, "Вот ссылка на главную страницу нашего сайта",
-                  "https://rsv.ru/"));
+          
           var list = [
-            "О проекте",
-            "Обучение",
-            "Вход/Регистрация",
-            "Доп. информация"
+            "В начало"
           ];
           return list;
         }
