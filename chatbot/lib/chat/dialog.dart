@@ -138,6 +138,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                insetPadding: EdgeInsets.only(bottom: 400),
                 content: Text(
                     "Приятно познакомиться, моё имя Альфред,\nи я являюсь вашим спутником по данному сайту.\nЧем я могу быть полезен?"),
                 actions: [
@@ -162,6 +163,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                insetPadding: EdgeInsets.only(bottom: 400),
                 content: Text(
                     "Доброго времени суток, я Андре, твой Личный помощник.\nДавайте вместе разберёмся с возможностями данного сайта"),
                 actions: [
@@ -186,6 +188,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
             context: context,
             builder: (BuildContext context) {
               return AlertDialog(
+                insetPadding: EdgeInsets.only(bottom: 400),
                 content: Text(
                     "Привет, меня зовут Алексий,\nя твой цифровой помощник и по совместительству друг.\nДавай прыгать по сайту вместе!"),
                 actions: [
@@ -198,6 +201,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                           context: context,
                           builder: (BuildContext context) {
                             return AlertDialog(
+                              insetPadding: EdgeInsets.only(bottom: 400),
                               content: Text("Выберите бота"),
                               actions: [
                                 TextButton(
@@ -722,7 +726,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
               context,
               Message(
                   this.id,
-                  1,"Выбирай смелее, а я тебе помогу, возможно этот выбор круто изменит твою жизнь :)",
+                  1,
+                  "Выбирай смелее, а я тебе помогу, возможно этот выбор круто изменит твою жизнь :)",
                   ""));
           var list = [
             "Главная страница",
@@ -747,7 +752,12 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
-              context, Message(this.id, 1, "Похвально, что ты интересуешься нашим проектом, уверен ты откроешь для себя много нового", ""));
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Похвально, что ты интересуешься нашим проектом, уверен ты откроешь для себя много нового",
+                  ""));
           var list = [
             "В начало",
             "О нас",
@@ -768,7 +778,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context,
-              Message(this.id, 1, "Кто мы такие и чем мы дышим, только здесь, эксклюзивно для тебя)",
+              Message(
+                  this.id,
+                  1,
+                  "Кто мы такие и чем мы дышим, только здесь, эксклюзивно для тебя)",
                   "https://rsv.ru/about-us/"));
           var list = ["В начало", "О проекте"];
           return list;
@@ -780,7 +793,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           _sendMessage(
               context,
               Message(
-                  this.id, 1, "Всегда приятно быть в курсе событий, не правда ли?\nПоэтому держи ссылку!", "https://rsv.ru/news/"));
+                  this.id,
+                  1,
+                  "Всегда приятно быть в курсе событий, не правда ли?\nПоэтому держи ссылку!",
+                  "https://rsv.ru/news/"));
           var list = ["В начало", "О проекте"];
           return list;
         }
@@ -801,7 +817,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context,
-              Message(this.id, 1, "Я более чем уверен , что узнав о наших проектах,\nты и сам вдохновишься на создание чего-то нового.Скорее переходи!",
+              Message(
+                  this.id,
+                  1,
+                  "Я более чем уверен , что узнав о наших проектах,\nты и сам вдохновишься на создание чего-то нового.Скорее переходи!",
                   "https://rsv.ru/competitions/contests/"));
           var list = ["В начало", "О проекте"];
           return list;
@@ -810,8 +829,13 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          _sendMessage(context,
-              Message(this.id, 1, "Человек способен на многое, стоит лишь попробовать.\nМы верим в то, что именно ты сможешь повторить чью то историю успеха,\nа еще лучше - создашь свою собственную.Узнай о таких историях побольше!", "https://rsv.ru/success/"));
+          _sendMessage(
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Человек способен на многое, стоит лишь попробовать.\nМы верим в то, что именно ты сможешь повторить чью то историю успеха,\nа еще лучше - создашь свою собственную.Узнай о таких историях побольше!",
+                  "https://rsv.ru/success/"));
           var list = ["В начало", "О проекте"];
           return list;
         }
@@ -820,7 +844,12 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
-              context, Message(this.id, 1, "Мы ведем свой блог, с кучей интересных статей на\nлюбой вкус и цвет, думаю, тебя заинтересует:)", "https://rsv.ru/blog/"));
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Мы ведем свой блог, с кучей интересных статей на\nлюбой вкус и цвет, думаю, тебя заинтересует:)",
+                  "https://rsv.ru/blog/"));
           var list = ["В начало", "О проекте"];
           return list;
         }
@@ -841,7 +870,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context,
-              Message(this.id, 1, "Чувствуешь в себе порывы к самореализации?\nУчаствуй в наших конкурсах и развивайся в направлении которое тебе нравится,\nа я тебя поддержу!!!",
+              Message(
+                  this.id,
+                  1,
+                  "Чувствуешь в себе порывы к самореализации?\nУчаствуй в наших конкурсах и развивайся в направлении которое тебе нравится,\nа я тебя поддержу!!!",
                   "https://rsv.ru/competitions/contests/"));
           var list = ["В начало", "О проекте"];
           return list;
@@ -850,8 +882,13 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          _sendMessage(context,
-              Message(this.id, 1, "Значимые события ты можешь увидеть в нашей галерее!", "https://rsv.ru/gallery/"));
+          _sendMessage(
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Значимые события ты можешь увидеть в нашей галерее!",
+                  "https://rsv.ru/gallery/"));
           var list = ["В начало", "О проекте"];
           return list;
         }
@@ -860,7 +897,12 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
-              context, Message(this.id, 1, "Приятно видеть в тебе тягу к знаниям!\nДумаю эта информация будет тебе полезна.", ""));
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Приятно видеть в тебе тягу к знаниям!\nДумаю эта информация будет тебе полезна.",
+                  ""));
           var list = [
             "В начало",
             "Онлайн-курсы",
@@ -878,7 +920,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           _sendMessage(
               context,
               Message(
-                  this.id, 1, "Зачем ходить куда то идти если можно учиться не выходя из дома?\nОнлайн-курсы - твой выбор!", "https://rsv.ru/edu/courses/"));
+                  this.id,
+                  1,
+                  "Зачем ходить куда то идти если можно учиться не выходя из дома?\nОнлайн-курсы - твой выбор!",
+                  "https://rsv.ru/edu/courses/"));
           var list = ["В начало", "Обучение"];
           return list;
         }
@@ -888,7 +933,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context,
-              Message(this.id, 1, "Обучение дома это конечно хорошо, но не забывай о реальном общении.\nПосещай наши очные мероприятия, знакомься с людьми, узнавай новое и будь в центре событий!",
+              Message(
+                  this.id,
+                  1,
+                  "Обучение дома это конечно хорошо, но не забывай о реальном общении.\nПосещай наши очные мероприятия, знакомься с людьми, узнавай новое и будь в центре событий!",
                   "https://rsv.ru/edu/events/"));
           var list = ["В начало", "Обучение"];
           return list;
@@ -897,8 +945,13 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          _sendMessage(context,
-              Message(this.id, 1, "Мы подобрали для тебя вебинары которые могут быть полезны.Учиться никогда не поздно:)", "https://rsv.ru/edu/webinars/"));
+          _sendMessage(
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Мы подобрали для тебя вебинары которые могут быть полезны.Учиться никогда не поздно:)",
+                  "https://rsv.ru/edu/webinars/"));
           var list = ["В начало", "Обучение"];
           return list;
         }
@@ -917,7 +970,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context,
-              Message(this.id, 1, 'Хочешь работать с опытными людьми в своей сфере?Узнай побольше о программе "Наставничество"',
+              Message(
+                  this.id,
+                  1,
+                  'Хочешь работать с опытными людьми в своей сфере?Узнай побольше о программе "Наставничество"',
                   "https://rsv.ru/mentoring/"));
           var list = ["В начало", "Обучение"];
           return list;
@@ -926,8 +982,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          _sendMessage(
-              context, Message(this.id, 1,"",""));
+          _sendMessage(context, Message(this.id, 1, "", ""));
           var list = ["В начало", "Вход", "Регистрация"];
           return list;
         }
@@ -935,8 +990,13 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          _sendMessage(context,
-              Message(this.id, 1, "Авторизуся прямо сейчас и верши великие дела вместе с нами!", "https://auth.rsv.ru/login/form"));
+          _sendMessage(
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Авторизуся прямо сейчас и верши великие дела вместе с нами!",
+                  "https://auth.rsv.ru/login/form"));
           var list = ["В начало", "Вход/Регистрация"];
           return list;
         }
@@ -946,7 +1006,10 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context,
-              Message(this.id, 1, "Что? Ты еще не зарегестрирован? Тогда к чему терять время?\nРегистрируйся и становись частью нашей большой семьи!",
+              Message(
+                  this.id,
+                  1,
+                  "Что? Ты еще не зарегестрирован? Тогда к чему терять время?\nРегистрируйся и становись частью нашей большой семьи!",
                   "https://auth.rsv.ru/registration/form"));
           var list = ["В начало", "Вход/Регистрация"];
           return list;
@@ -955,8 +1018,13 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
         {
           _sendMessage(context, Message(this.id, 0, data, ""));
           await Future.delayed(Duration(seconds: 1));
-          _sendMessage(context,
-              Message(this.id, 1, "Все еще мало информации? Мне нравится твоя любознательность!", ""));
+          _sendMessage(
+              context,
+              Message(
+                  this.id,
+                  1,
+                  "Все еще мало информации? Мне нравится твоя любознательность!",
+                  ""));
           var list = [
             "В начало",
             "Мы в соцсетях",
@@ -1055,8 +1123,8 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context,
-              Message(
-                  this.id, 1, "Найдите работу своей мечты вместе с нами", "https://trudvsem.ru/"));
+              Message(this.id, 1, "Найдите работу своей мечты вместе с нами",
+                  "https://trudvsem.ru/"));
           var list = ["В начало", "Доп. информация"];
           return list;
         }
