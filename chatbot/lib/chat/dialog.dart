@@ -706,7 +706,6 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   }
 
   Future<List<String>> scenario(BuildContext context, String data) async {
-    _sendMessage(context, Message(this.id, 1,first_message, ""));
     switch (data) {
       case "В начало":
         {
