@@ -16,6 +16,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   List<Message> messageList;
   List<Message> listviewList;
   List<String> buttonList;
+  String first_message;
   int id = 0;
   int bot_id = 0;
   bool isChatOpening = true;
@@ -202,7 +203,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               insetPadding: EdgeInsets.only(bottom: 400),
-                              content: Text("Выберите бота"),
+                              content: Text("Выберите своего помощника."),
                               actions: [
                                 TextButton(
                                   onPressed: () {
@@ -307,6 +308,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           : youngPersonTapped
               ? mainAvatar = "2Mask_Group.png"
               : mainAvatar = "1Mask_Group.png";
+      oldPersonTapped ? first_message="Приветствую вас,я Альфред, чем могу быть полезен?" : youngPersonTapped ? first_message="Доброго времени суток, меня зовут Андре, и я постараюсь помочь вам." : first_message="Привет , меня зовут Алексий и я хочу стать твоим другом:)";
     });
     Size size = MediaQuery.of(context).size;
     if (messageList == null) {
@@ -320,6 +322,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
       buttonList.add("Навигация");
       buttonList.add("Экскурсия");
       buttonList.add("Рекомендации");
+      buttonList.add("Тех. поддержка");
       buttonList.add("Сменить персонажа");
     }
     _upgrageListView();
@@ -703,6 +706,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
   }
 
   Future<List<String>> scenario(BuildContext context, String data) async {
+    _sendMessage(context, Message(this.id, 1,first_message, ""));
     switch (data) {
       case "В начало":
         {
@@ -710,6 +714,20 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
           await Future.delayed(Duration(seconds: 1));
           _sendMessage(
               context, Message(this.id, 1, "Чем могу еще помочь?", ""));
+          var list = [
+            "Навигация",
+            "Экскурсия",
+            "Рекомендации",
+            "Смена персонажа",
+          ];
+          return list;
+        }
+      case "Рекомендации":
+        {
+          _sendMessage(context, Message(this.id, 0, data, ""));
+          await Future.delayed(Duration(seconds: 1));
+          _sendMessage(
+              context, Message(this.id, 1, 'Хей, для тебе есть интересное предложение.Скорее регистрируйся на хакатон "Цифровой прорыв"!', "https://leadersofdigital.ru/?utm_source=google&utm_medium=cpc&utm_campaign=g&utm_content=507103171862&utm_term=%2B%D1%86%D0%B8%D1%84%D1%80%D0%BE%D0%B2%D0%BE%D0%B9%20%2B%D0%BF%D1%80%D0%BE%D1%80%D1%8B%D0%B2&gclid=CjwKCAjwjuqDBhAGEiwAdX2cj5fxeb90YrfLEPx7bekqdaxIfg_h_aibKfVHtUcPnqaQh0w4wCo3axoCGpYQAvD_BwE"));
           var list = [
             "Навигация",
             "Экскурсия",
@@ -922,7 +940,7 @@ class _DialogViewState extends State<DialogView> with TickerProviderStateMixin {
               Message(
                   this.id,
                   1,
-                  "Зачем ходить куда то идти если можно учиться не выходя из дома?\nОнлайн-курсы - твой выбор!",
+                  "Зачем ходить куда то если можно учиться не выходя из дома?\nОнлайн-курсы - твой выбор!",
                   "https://rsv.ru/edu/courses/"));
           var list = ["В начало", "Обучение"];
           return list;
